@@ -20,8 +20,8 @@ func (controller *OutgoingFingerprintController) outgoingEnrollHandler(_reqObj r
 		err = fmt.Errorf("error occured while trying to get access token: %w", err)
 		return
 	}
-	newEntryData := _reqObj.NewEntryCbor
-	userId := _reqObj.UserId
+	newEntryData := _reqObj.Data
+	userId := _reqObj.Id
 	reqObj := requestobjects.EnrollTemplateReqObj{Data: newEntryData, Id: userId}
 	jsonobj, err := json.Marshal(reqObj)
 	if err != nil {

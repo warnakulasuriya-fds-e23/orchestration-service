@@ -71,7 +71,7 @@ paths:
       tags:
         - fingeprint
       requestBody:
-        description: Contains the cbor template data of new entry, user id and the id of the fingerprint-client
+        description: Contains the cbor template data of new entry (data), user id (id) and the id of the fingerprint-client (clientid)
         content:
           application/json:
             schema:
@@ -120,11 +120,11 @@ components:
     models.submitForEnrollReqObj:
       type: object
       properties:
-        newentrycbor:
+        data:
             type: string
             format: byte
             example: pGVXaWR0aBkBLGZIZWlnaHQZASxoTWludXRpYWWYGaRhWBiMYVkY6GlEaXJlY3Rpb277PMLbXlqTahhVAGkYVgYf2FZGPFpRGlyZWN0aW9u+z/=
-        userid:
+        id:
           type: string
           example: ceded-ejheh-243nf
         clientid:

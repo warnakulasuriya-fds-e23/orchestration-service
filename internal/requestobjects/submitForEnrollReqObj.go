@@ -1,7 +1,7 @@
 package requestobjects
 
 type SubmitForEnrollReqObj struct {
-	NewEntryCbor []byte `json:"newentrycbor"`
-	UserId       string `json:"userid"`
-	ClientId     string `json:"clientid"`
+	Data     []byte `json:"data"`
+	Id       string `json:"id"`
+	ClientId string `json:"clientid"`
 }
