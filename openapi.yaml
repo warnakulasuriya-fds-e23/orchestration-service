@@ -1,0 +1,132 @@
+openapi: 3.0.1
+info:
+  title: Orchestration Service
+  version: 1.0.0
+tags:
+  - name : fingerprint
+    description: Related to fingperprint Biometric Data
+
+paths:
+  /api/fingerprint/submit-for-identify:
+    post:
+      operationId: submitFingerprintIdentify
+      summary: used to post fingerprint data for identify process
+      description: request consisting of the probe cbor data placed in a json along with the id of the fingprint-client will be recieved and then appropriately forwarded for the actual identification procedure
+      tags:
+        - fingerprint
+      requestBody:
+        description: Contains the cbor template data and the id of the fingerprint-client
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/models.submitForIdentifyReqObj' 
+      responses:
+        '200':
+          description: Successful response
+          content:
+            text/plain:
+              schema:
+                type: string
+        '500':
+          description: Internal Server Error
+          content:
+            text/plain:
+              schema:
+                type: string
+      deprecated: false
+      security: []
+  /api/fingerprint/submit-for-match:
+    post:
+      operationId: submitFingerprintMatch
+      summary: used to submit data related to fingeprint match process
+      description: request consisting of the probe and candidate cbor data placed in a json along with the id of fingerprint-client will be recieved and appropriately forwarded for actual match procedure
+      tags:
+      - fingperprint
+      requestBody:
+        description: Contains the cbor template data of probe and candidate and the id of the fingerprint-client
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/models.submitForMatchReqObj'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            text/plain:
+              schema:
+                type: string
+        '500':
+          description: Internal Server Error
+          content:
+            text/plain:
+              schema:
+                type: string
+      deprecated: false
+      security: []      
+  /api/fingerprint/submit-for-enroll:
+    post:
+      operationId: submitFingerprintEnroll
+      summary: used to submit data related to the fingerprint enroll
+      description: request consisting of the new entry template data, user id and the client id will be appropriately forwarded for the actual enroll procedure
+      tags:
+        - fingeprint
+      requestBody:
+        description: Contains the cbor template data of new entry, user id and the id of the fingerprint-client
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/models.submitForEnrollReqObj'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            text/plain:
+              schema:
+                type: string
+        '500':
+          description: Internal Server Error
+          content:
+            text/plain:
+              schema:
+                type: string
+      deprecated: false
+      security: []
+components:
+  schemas:
+    models.submitForIdentifyReqObj:
+      type: object
+      properties:
+          probecbor:
+            type: string
+            format: byte
+            example: pGVXaWR0aBkBLGZIZWlnaHQZASxoTWludXRpYWWYGaRhWBiMYVkY6GlEaXJlY3Rpb277PMLbXlqTahhVAGkYVgYf2FZGPFpRGlyZWN0aW9u+z/=      
+          clientid:
+            type: string
+            example: ABCD123
+    models.submitForMatchReqObj:
+      type: object
+      properties:
+          probecbor:
+            type: string
+            format: byte
+            example: pGVXaWR0aBkBLGZIZWlnaHQZASxoTWludXRpYWWYGaRhWBiMYVkY6GlEaXJlY3Rpb277PMLbXlqTahhVAGkYVgYf2FZGPFpRGlyZWN0aW9u+z/=      
+          candidatecbor:
+            type: string
+            format: byte
+            example: pGVXaWR0aBkBLGZIZWlnaHQZASxoTWludXRpYWWYGaRhWBiMYVkY6GlEaXJlY3Rpb277PMLbXlqTahhVAGkYVgYf2FZGPFpRGlyZWN0aW9u+z/=
+          clientid:
+            type: string
+            example: ABCD123
+    models.submitForEnrollReqObj:
+      type: object
+      properties:
+        newentrycbor:
+            type: string
+            format: byte
+            example: pGVXaWR0aBkBLGZIZWlnaHQZASxoTWludXRpYWWYGaRhWBiMYVkY6GlEaXJlY3Rpb277PMLbXlqTahhVAGkYVgYf2FZGPFpRGlyZWN0aW9u+z/=
+        userid:
+          type: string
+          example: ceded-ejheh-243nf
+        clientid:
+          type: string
+          example: ABCD123
