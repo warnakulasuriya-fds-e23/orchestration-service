@@ -4,6 +4,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func IncomingIdentifyHandler(c *gin.Context) {
+func (controller *IncomingFingerprintController) incomingIdentifyHandler(c *gin.Context) {
 
 }

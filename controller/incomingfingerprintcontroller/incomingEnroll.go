@@ -5,12 +5,11 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
-	"github.com/warnakulasuriya-fds-e23/orchestration-service/controller/outgoingfingerprintcontroller"
 	"github.com/warnakulasuriya-fds-e23/orchestration-service/requestobjects"
 	"github.com/warnakulasuriya-fds-e23/orchestration-service/responseobjects"
 )
 
-func IncomingEnrollHandler(c *gin.Context) {
+func (controller *IncomingFingerprintController) incomingEnrollHandler(c *gin.Context) {
 	// check whether the client-id is authorized to be performing the enroll procedure
 	authorizedClientId := os.Getenv("FINGERPRINT_AUTHORIZED_ENROLLMENT_CLIENT_ID")
 	var reqObj requestobjects.SubmitForEnrollReqObj
@@ -26,7 +25,11 @@ func IncomingEnrollHandler(c *gin.Context) {
 		return
 	}
 
-	go outgoingfingerprintcontroller.OutgoingEnrollHandler(reqObj)
-
-	c.IndentedJSON(http.StatusOK, "Successfully Forwarded data for enrollment")
+	message, err := controller.outgoingfingerprintcontroller.OutgoingEnrollHandler(reqObj)
+	if err != nil {
+		resObj := responseobjects.ErrorResObj{Message: "error occured in outgoing to target: " + err.Error()}
+		c.IndentedJSON(http.StatusUnauthorized, resObj)
+		return
+	}
+	c.IndentedJSON(http.StatusOK, message)
 }

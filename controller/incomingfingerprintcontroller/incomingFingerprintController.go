@@ -1,0 +1,24 @@
+package incomingfingerprintcontroller
+
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/warnakulasuriya-fds-e23/orchestration-service/controller/outgoingfingerprintcontroller"
+)
+
+type IncomingFingerprintController struct {
+	outgoingfingerprintcontroller *outgoingfingerprintcontroller.OutgoingFingerprintController
+}
+
+func NewIncomingFingerprintController(outcntrl *outgoingfingerprintcontroller.OutgoingFingerprintController) *IncomingFingerprintController {
+	return &IncomingFingerprintController{outgoingfingerprintcontroller: outcntrl}
+}
+
+func (controller *IncomingFingerprintController) IncomingIdentifyHandler(c *gin.Context) {
+	controller.incomingIdentifyHandler(c)
+}
+func (controller *IncomingFingerprintController) IncomingMatchHandler(c *gin.Context) {
+	controller.incomingMatchHandler(c)
+}
+func (controller *IncomingFingerprintController) IncomingEnrollHandler(c *gin.Context) {
+	controller.incomingEnrollHandler(c)
+}

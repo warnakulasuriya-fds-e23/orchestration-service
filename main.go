@@ -7,6 +7,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"github.com/warnakulasuriya-fds-e23/orchestration-service/controller/incomingfingerprintcontroller"
+	"github.com/warnakulasuriya-fds-e23/orchestration-service/controller/outgoingfingerprintcontroller"
+	"github.com/warnakulasuriya-fds-e23/orchestration-service/customstorage"
 )
 
 func main() {
@@ -20,11 +22,18 @@ func main() {
 			log.Println(".env successfully loaded")
 		}
 	}
+	tokenstorage, err := customstorage.NewTokenStorage()
+	if err != nil {
+		log.Fatalf("unable to make token storage : %s", err.Error())
+	}
+	outgoingfingerprintcntrlr := outgoingfingerprintcontroller.NewOutgoingFingerprintController(*tokenstorage)
+	incomingfingerprintcntrlr := incomingfingerprintcontroller.NewIncomingFingerprintController(outgoingfingerprintcntrlr)
+
 	router := gin.Default()
 
-	router.POST("/api/fingerprint/submit-for-identify", incomingfingerprintcontroller.IncomingIdentifyHandler)
-	router.POST("/api/fingerprint/submit-for-match", incomingfingerprintcontroller.IncomingMatchHandler)
-	router.POST("/api/fingerprint/submit-for-enroll", incomingfingerprintcontroller.IncomingEnrollHandler)
+	router.POST("/api/fingerprint/submit-for-identify", incomingfingerprintcntrlr.IncomingIdentifyHandler)
+	router.POST("/api/fingerprint/submit-for-match", incomingfingerprintcntrlr.IncomingMatchHandler)
+	router.POST("/api/fingerprint/submit-for-enroll", incomingfingerprintcntrlr.IncomingEnrollHandler)
 
 	router.Run(":5000")
 }
