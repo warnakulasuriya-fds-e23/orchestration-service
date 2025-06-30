@@ -31,9 +31,9 @@ func main() {
 
 	router := gin.Default()
 
-	router.POST("/api/fingerprint/submit-for-identify", incomingfingerprintcntrlr.IncomingIdentifyHandler)
-	router.POST("/api/fingerprint/submit-for-match", incomingfingerprintcntrlr.IncomingMatchHandler)
-	router.POST("/api/fingerprint/submit-for-enroll", incomingfingerprintcntrlr.IncomingEnrollHandler)
+	router.POST("/api/fingerprint/identify", incomingfingerprintcntrlr.IncomingIdentifyHandler)
+	router.POST("/api/fingerprint/match", incomingfingerprintcntrlr.IncomingMatchHandler)
+	router.POST("/api/fingerprint/enroll", incomingfingerprintcntrlr.IncomingEnrollHandler)
 
 	router.Run(":5000")
 }

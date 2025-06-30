@@ -7,7 +7,7 @@ tags:
     description: Related to fingperprint Biometric Data
 
 paths:
-  /api/fingerprint/submit-for-identify:
+  /api/fingerprint/identify:
     post:
       operationId: submitFingerprintIdentify
       summary: used to post fingerprint data for identify process
@@ -35,7 +35,7 @@ paths:
                 type: string
       deprecated: false
       security: []
-  /api/fingerprint/submit-for-match:
+  /api/fingerprint/match:
     post:
       operationId: submitFingerprintMatch
       summary: used to submit data related to fingeprint match process
@@ -63,7 +63,7 @@ paths:
                 type: string
       deprecated: false
       security: []      
-  /api/fingerprint/submit-for-enroll:
+  /api/fingerprint/enroll:
     post:
       operationId: submitFingerprintEnroll
       summary: used to submit data related to the fingerprint enroll
