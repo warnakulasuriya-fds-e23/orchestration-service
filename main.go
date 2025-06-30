@@ -24,6 +24,7 @@ func main() {
 
 	router.POST("/api/fingerprint/submit-for-identify", incomingfingerprintcontroller.IncomingIdentifyHandler)
 	router.POST("/api/fingerprint/submit-for-match", incomingfingerprintcontroller.IncomingMatchHandler)
+	router.POST("/api/fingerprint/submit-for-enroll", incomingfingerprintcontroller.IncomingEnrollHandler)
 
 	router.Run(":5000")
 }
