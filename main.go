@@ -6,9 +6,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-	"github.com/warnakulasuriya-fds-e23/orchestration-service/controller/incomingfingerprintcontroller"
-	"github.com/warnakulasuriya-fds-e23/orchestration-service/controller/outgoingfingerprintcontroller"
-	"github.com/warnakulasuriya-fds-e23/orchestration-service/customstorage"
+	"github.com/warnakulasuriya-fds-e23/orchestration-service/internal/controller/incomingfingerprintcontroller"
+	"github.com/warnakulasuriya-fds-e23/orchestration-service/internal/controller/outgoingfingerprintcontroller"
+	"github.com/warnakulasuriya-fds-e23/orchestration-service/internal/customstorage"
 )
 
 func main() {

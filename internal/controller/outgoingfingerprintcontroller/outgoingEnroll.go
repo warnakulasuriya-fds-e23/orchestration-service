@@ -9,8 +9,8 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/warnakulasuriya-fds-e23/fingerprint-go-client/responseobjects"
-	"github.com/warnakulasuriya-fds-e23/orchestration-service/requestobjects"
+	"github.com/warnakulasuriya-fds-e23/orchestration-service/internal/requestobjects"
+	"github.com/warnakulasuriya-fds-e23/orchestration-service/internal/responseobjects"
 )
 
 func (controller *OutgoingFingerprintController) outgoingEnrollHandler(_reqObj requestobjects.SubmitForEnrollReqObj) (message string, err error) {

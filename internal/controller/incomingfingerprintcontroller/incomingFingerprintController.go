@@ -2,7 +2,7 @@ package incomingfingerprintcontroller
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/warnakulasuriya-fds-e23/orchestration-service/controller/outgoingfingerprintcontroller"
+	"github.com/warnakulasuriya-fds-e23/orchestration-service/internal/controller/outgoingfingerprintcontroller"
 )
 
 type IncomingFingerprintController struct {

@@ -3,8 +3,8 @@ package outgoingfingerprintcontroller
 import (
 	"os"
 
-	"github.com/warnakulasuriya-fds-e23/orchestration-service/customstorage"
-	"github.com/warnakulasuriya-fds-e23/orchestration-service/requestobjects"
+	"github.com/warnakulasuriya-fds-e23/orchestration-service/internal/customstorage"
+	"github.com/warnakulasuriya-fds-e23/orchestration-service/internal/requestobjects"
 )
 
 const (

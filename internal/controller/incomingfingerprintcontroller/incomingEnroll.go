@@ -5,8 +5,8 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
-	"github.com/warnakulasuriya-fds-e23/orchestration-service/requestobjects"
-	"github.com/warnakulasuriya-fds-e23/orchestration-service/responseobjects"
+	"github.com/warnakulasuriya-fds-e23/orchestration-service/internal/requestobjects"
+	"github.com/warnakulasuriya-fds-e23/orchestration-service/internal/responseobjects"
 )
 
 func (controller *IncomingFingerprintController) incomingEnrollHandler(c *gin.Context) {
