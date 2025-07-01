@@ -35,3 +35,7 @@ func (controller *OutgoingFingerprintController) OutgoingIdentifyHandler(reqObj 
 	response, err = controller.outgoingIdentifyHandler(reqObj)
 	return
 }
+func (controller *OutgoingFingerprintController) OutgoingMatchHandler(reqObj requestobjects.SubmitForMatchReqObj) (response responseobjects.MatchTemplatesResObj, err error) {
+	response, err = controller.outgoingMatchHandler(reqObj)
+	return
+}
