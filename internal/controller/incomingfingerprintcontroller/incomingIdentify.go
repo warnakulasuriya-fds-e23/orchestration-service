@@ -33,4 +33,12 @@ func (controller *IncomingFingerprintController) incomingIdentifyHandler(c *gin.
 		return
 	}
 
+	response, err := controller.outgoingfingerprintcontroller.OutgoingIdentifyHandler(reqObj)
+	if err != nil {
+		resObj := responseobjects.ErrorResObj{Message: "error occured in outgoing to target: " + err.Error()}
+		c.IndentedJSON(http.StatusInternalServerError, resObj)
+		return
+	}
+	c.IndentedJSON(http.StatusOK, response)
+
 }
