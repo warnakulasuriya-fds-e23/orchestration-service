@@ -5,6 +5,7 @@ import (
 
 	"github.com/warnakulasuriya-fds-e23/orchestration-service/internal/customstorage"
 	"github.com/warnakulasuriya-fds-e23/orchestration-service/internal/requestobjects"
+	"github.com/warnakulasuriya-fds-e23/orchestration-service/internal/responseobjects"
 )
 
 const (
@@ -28,5 +29,9 @@ func NewOutgoingFingerprintController(tstorage customstorage.TokenStorage) (cont
 
 func (controller *OutgoingFingerprintController) OutgoingEnrollHandler(reqObj requestobjects.SubmitForEnrollReqObj) (message string, err error) {
 	message, err = controller.outgoingEnrollHandler(reqObj)
+	return
+}
+func (controller *OutgoingFingerprintController) OutgoingIdentifyHandler(reqObj requestobjects.SubmitForIdentifyReqObj) (response responseobjects.IdentifyTemplateResObj, err error) {
+	response, err = controller.outgoingIdentifyHandler(reqObj)
 	return
 }
