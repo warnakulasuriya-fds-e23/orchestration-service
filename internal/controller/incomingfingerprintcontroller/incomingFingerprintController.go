@@ -22,3 +22,6 @@ func (controller *IncomingFingerprintController) IncomingMatchHandler(c *gin.Con
 func (controller *IncomingFingerprintController) IncomingEnrollHandler(c *gin.Context) {
 	controller.incomingEnrollHandler(c)
 }
+func (controller *IncomingFingerprintController) IncomingAuthorize(c *gin.Context) {
+	controller.incomingAuthorize(c)
+}

@@ -13,6 +13,8 @@ const (
 	IdentifyTemplateEndpoint  = "/api/fingerprint/identify"
 	EnrollTemplateEndpoint    = "/api/fingerprint/enroll"
 	UploadCborZipFileEndpoint = "/api/gallery/upload-cbor-zip"
+	AuthorizeEndpoint         = "/oauth2/authorize"
+	AuthnEndpont              = "/oauth2/authn"
 )
 
 type OutgoingFingerprintController struct {
@@ -37,5 +39,9 @@ func (controller *OutgoingFingerprintController) OutgoingIdentifyHandler(reqObj 
 }
 func (controller *OutgoingFingerprintController) OutgoingMatchHandler(reqObj requestobjects.SubmitForMatchReqObj) (response responseobjects.MatchTemplatesResObj, err error) {
 	response, err = controller.outgoingMatchHandler(reqObj)
+	return
+}
+func (controller *OutgoingFingerprintController) OutgoingAuthorize(reqObj requestobjects.SubmitForIdentifyReqObj) (message string, err error) {
+	message, err = controller.outgoingAuthorize(reqObj)
 	return
 }

@@ -65,6 +65,7 @@ func (tokenStorage *TokenStorage) GetAccessToken() (token string, err error) {
 			err = fmt.Errorf("error while sending or recieving post request : %w", errReqSend)
 			return
 		}
+		defer res.Body.Close()
 		bodybytes, errReadAll := io.ReadAll(res.Body)
 		if errReadAll != nil {
 			token = ""

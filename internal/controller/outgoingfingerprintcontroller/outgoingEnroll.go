@@ -40,6 +40,7 @@ func (controller *OutgoingFingerprintController) outgoingEnrollHandler(_reqObj r
 	req, err := http.NewRequest("POST", urlString, requestBody)
 	if err != nil {
 		message = ""
+		// TODO: properly handle this error
 		log.Fatal(err.Error())
 	}
 	req.Header.Add("Content-Type", "application/json")

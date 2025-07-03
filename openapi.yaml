@@ -91,6 +91,34 @@ paths:
                 type: string
       deprecated: false
       security: []
+  /api/fingerprint/authorize:
+    post:
+      operationId: submitFingerprintAuthorize
+      summary: used to Authorize an incoming fingerprint
+      description: request consisting of the probe cbor data placed in a json along with the id of the fingprint-client will be recieved and then appropriately forwarded for the actual authorization procedure
+      tags:
+        - fingerprint
+      requestBody:
+        description: Contains the cbor template data and the id of the fingerprint-client
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/models.submitForAuthorizeReqObj' 
+      responses:
+        '200':
+          description: Successful response
+          content:
+            text/plain:
+              schema:
+                type: string
+        '500':
+          description: Internal Server Error
+          content:
+            text/plain:
+              schema:
+                type: string
+      deprecated: false
+      security: []
 components:
   schemas:
     models.submitForIdentifyReqObj:
@@ -130,3 +158,13 @@ components:
         clientid:
           type: string
           example: ABCD123
+    models.submitForAuthorizeReqObj:
+      type: object
+      properties:
+          probecbor:
+            type: string
+            format: byte
+            example: pGVXaWR0aBkBLGZIZWlnaHQZASxoTWludXRpYWWYGaRhWBiMYVkY6GlEaXJlY3Rpb277PMLbXlqTahhVAGkYVgYf2FZGPFpRGlyZWN0aW9u+z/=      
+          clientid:
+            type: string
+            example: ABCD123
