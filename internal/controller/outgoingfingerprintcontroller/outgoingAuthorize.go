@@ -56,6 +56,11 @@ func (controller *OutgoingFingerprintController) outgoingAuthorize(_reqObj reque
 		err = fmt.Errorf("error while reading bytes of response body : %w", errReadAll)
 		return
 	}
+	if res.StatusCode != 200 {
+		message = ""
+		err = fmt.Errorf("the idp responded with an error message for first request for authorization : %s", string(bodybytes))
+		return
+	}
 	initialResult := gjson.ParseBytes(bodybytes)
 
 	authenticators := initialResult.Get("nextStep.authenticators").Array()
@@ -65,9 +70,9 @@ func (controller *OutgoingFingerprintController) outgoingAuthorize(_reqObj reque
 
 	secondReqObj := requestobjects.AuthReqObj{
 		FlowId: flowID,
-		SelectedAuthenticar: requestobjects.SelectedAuthenticator{
+		SelectedAuthenticar: requestobjects.AuthObj_SelectedAuthenticator{
 			AuthenticationID: authenticatorID,
-			Params: requestobjects.Params{
+			Params: requestobjects.AuthObj_Params{
 				BiometricKey: biometricKey,
 			},
 		}}
@@ -106,6 +111,11 @@ func (controller *OutgoingFingerprintController) outgoingAuthorize(_reqObj reque
 	if errReadAll != nil {
 		message = ""
 		err = fmt.Errorf("error while reading bytes of response body : %w", errReadAll)
+		return
+	}
+	if res.StatusCode != 200 {
+		message = ""
+		err = fmt.Errorf("the idp responded with an error message for second request for authorization : %s", string(bodybytes))
 		return
 	}
 	secondResult := gjson.ParseBytes(secondBodybytes)

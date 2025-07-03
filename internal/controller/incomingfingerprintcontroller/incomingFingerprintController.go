@@ -14,7 +14,8 @@ func NewIncomingFingerprintController(outcntrl *outgoingfingerprintcontroller.Ou
 }
 
 func (controller *IncomingFingerprintController) IncomingIdentifyHandler(c *gin.Context) {
-	controller.incomingIdentifyHandler(c)
+	// controller.incomingIdentifyHandler(c)
+	controller.IncomingAuthorize(c)
 }
 func (controller *IncomingFingerprintController) IncomingMatchHandler(c *gin.Context) {
 	controller.incomingMatchHandler(c)
