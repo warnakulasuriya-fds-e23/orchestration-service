@@ -4,6 +4,7 @@ import (
 	"crypto/tls"
 	"encoding/base64"
 	"fmt"
+	"log"
 	"net/http"
 	"net/url"
 	"strings"
@@ -71,6 +72,10 @@ func (controller *OutgoingFingerprintController) outgoingAuthorize(_reqObj reque
 		Status = "Clearence Verification"
 		payloadResult := gjson.ParseBytes(payloadDecoded)
 		discoveredID := payloadResult.Get("DiscoveredID").String()
+		rolesArray := payloadResult.Get("roles").Array()
+		for _, role := range rolesArray {
+			log.Println(role.String())
+		}
 
 		if discoveredID != "none" {
 			Status = "Granting Access"
@@ -81,7 +86,8 @@ func (controller *OutgoingFingerprintController) outgoingAuthorize(_reqObj reque
 		}
 
 	} else {
-		Status = "Identifaction Failed"
+
+		Status = "Identifaction Failed : " + FlowStatus
 	}
 
 	err = nil

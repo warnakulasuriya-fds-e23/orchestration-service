@@ -17,7 +17,7 @@ func FlowInitiationCall(urlString string, internalClient *http.Client) (initialR
 	data.Set("response_type", "code")
 	data.Set("redirect_uri", os.Getenv("IDP_APP_REDIRECT_URI"))
 	data.Set("state", "Authentication via fingerprint")
-	data.Set("scope", "openid internal_login FingerprintAuth")
+	data.Set("scope", "openid internal_login FingerprintAuth roles")
 	data.Set("response_mode", "direct")
 
 	requestBody := bytes.NewBufferString(data.Encode())

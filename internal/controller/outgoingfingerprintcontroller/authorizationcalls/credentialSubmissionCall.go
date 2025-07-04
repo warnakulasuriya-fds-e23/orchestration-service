@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 
 	"github.com/tidwall/gjson"
 	"github.com/warnakulasuriya-fds-e23/orchestration-service/internal/requestobjects"
@@ -14,14 +15,24 @@ import (
 
 func CredentialSubmissionCall(urlString string, internalClient *http.Client, initialResult *gjson.Result, _reqObj requestobjects.SubmitForIdentifyReqObj) (secondResult gjson.Result, err error) {
 	authenticators := initialResult.Get("nextStep.authenticators").Array()
-	authenticatorID := authenticators[0].Get("authenticatorId").String()
+	var authenticatorId string
+	for _, authenticator := range authenticators {
+		if authenticator.Get("authenticator").String() == os.Getenv("IDP_BIO_SDK_AUTHENTICATOR_DISPLAY_NAME") {
+			authenticatorId = authenticator.Get("authenticatorId").String()
+		}
+	}
+
+	if authenticatorId == "" {
+		err = fmt.Errorf("error occured authenticator under given displayname was not found")
+		return
+	}
 	flowID := initialResult.Get("flowId").String()
 	biometricKey := base64.StdEncoding.EncodeToString(_reqObj.ProbeCbor)
 
 	secondReqObj := requestobjects.AuthReqObj{
 		FlowId: flowID,
 		SelectedAuthenticar: requestobjects.AuthObj_SelectedAuthenticator{
-			AuthenticationID: authenticatorID,
+			AuthenticationID: authenticatorId,
 			Params: requestobjects.AuthObj_Params{
 				BiometricKey: biometricKey,
 			},
