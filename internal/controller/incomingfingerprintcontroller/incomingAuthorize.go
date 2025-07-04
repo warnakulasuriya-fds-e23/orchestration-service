@@ -33,12 +33,12 @@ func (controller *IncomingFingerprintController) incomingAuthorize(c *gin.Contex
 		return
 	}
 
-	response, err := controller.outgoingfingerprintcontroller.OutgoingAuthorize(reqObj)
+	Status, err := controller.outgoingfingerprintcontroller.OutgoingAuthorize(reqObj)
 	if err != nil {
 		resObj := responseobjects.ErrorResObj{Message: "error occured in outgoing to target: " + err.Error()}
 		c.IndentedJSON(http.StatusInternalServerError, resObj)
 		return
 	}
-	c.IndentedJSON(http.StatusOK, response)
+	c.IndentedJSON(http.StatusOK, responseobjects.AuthorizeResObj{Status: Status})
 
 }

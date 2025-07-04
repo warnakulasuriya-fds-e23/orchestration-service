@@ -42,7 +42,7 @@ func (controller *OutgoingFingerprintController) OutgoingMatchHandler(reqObj req
 	response, err = controller.outgoingMatchHandler(reqObj)
 	return
 }
-func (controller *OutgoingFingerprintController) OutgoingAuthorize(reqObj requestobjects.SubmitForIdentifyReqObj) (isMatched bool, err error) {
-	isMatched, err = controller.outgoingAuthorize(reqObj)
+func (controller *OutgoingFingerprintController) OutgoingAuthorize(reqObj requestobjects.SubmitForIdentifyReqObj) (Status string, err error) {
+	Status, err = controller.outgoingAuthorize(reqObj)
 	return
 }
