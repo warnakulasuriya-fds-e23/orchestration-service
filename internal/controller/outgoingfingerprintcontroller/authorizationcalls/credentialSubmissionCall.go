@@ -27,14 +27,14 @@ func CredentialSubmissionCall(urlString string, internalClient *http.Client, ini
 		return
 	}
 	flowID := initialResult.Get("flowId").String()
-	biometricKey := base64.StdEncoding.EncodeToString(_reqObj.ProbeCbor)
+	BiometricTemplate := base64.StdEncoding.EncodeToString(_reqObj.ProbeCbor)
 
 	secondReqObj := requestobjects.AuthReqObj{
 		FlowId: flowID,
 		SelectedAuthenticar: requestobjects.AuthObj_SelectedAuthenticator{
 			AuthenticationID: authenticatorId,
 			Params: requestobjects.AuthObj_Params{
-				BiometricKey: biometricKey,
+				BiometricTemplate: BiometricTemplate,
 			},
 		}}
 	jsonobj, err := json.Marshal(secondReqObj)

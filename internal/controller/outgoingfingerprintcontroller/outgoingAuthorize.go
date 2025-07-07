@@ -38,7 +38,7 @@ func (controller *OutgoingFingerprintController) outgoingAuthorize(_reqObj reque
 	internalclient := &http.Client{Transport: tr}
 
 	Status = "Flow Initiation"
-	intialResult, errflowItinit := authorizationcalls.FlowInitiationCall(flowInitiationUrl, internalclient)
+	intialResult, errflowItinit := authorizationcalls.FlowInitiationCall(flowInitiationUrl, _reqObj.ClientId, internalclient)
 	if errflowItinit != nil {
 		err = fmt.Errorf("error encountered in authorization flow while at %s  : %w", Status, errflowItinit)
 		return

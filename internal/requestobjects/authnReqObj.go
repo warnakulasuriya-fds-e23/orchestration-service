@@ -11,5 +11,5 @@ type AuthObj_SelectedAuthenticator struct {
 }
 
 type AuthObj_Params struct {
-	BiometricKey string `json:"biometric-key"`
+	BiometricTemplate string `json:"biometric-template"`
 }

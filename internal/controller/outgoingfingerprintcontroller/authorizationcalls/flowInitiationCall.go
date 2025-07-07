@@ -11,7 +11,7 @@ import (
 	"github.com/tidwall/gjson"
 )
 
-func FlowInitiationCall(urlString string, internalClient *http.Client) (initialResult gjson.Result, err error) {
+func FlowInitiationCall(urlString string, clientId string, internalClient *http.Client) (initialResult gjson.Result, err error) {
 	data := url.Values{}
 	data.Set("client_id", os.Getenv("CONSUMER_KEY_FOR_OUTGOING"))
 	data.Set("response_type", "code")
@@ -28,6 +28,7 @@ func FlowInitiationCall(urlString string, internalClient *http.Client) (initialR
 	}
 	initialreq.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	initialreq.Header.Add("Accept", "application/json")
+	initialreq.Header.Add("clientid", clientId)
 
 	// tr := &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}
 

@@ -3,6 +3,6 @@ package outgoingdoorsystemcontroller
 type OutgoingDoorSystemConroller struct {
 }
 
-func (controller *OutgoingDoorSystemConroller) checkAndSend(maxAccessLevel string, clientId string) {
+func (controller *OutgoingDoorSystemConroller) checkAndSend(roles string, clientId string) {
 
 }
