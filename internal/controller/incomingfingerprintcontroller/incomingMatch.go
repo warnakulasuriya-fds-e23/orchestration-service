@@ -23,7 +23,7 @@ func (controller *IncomingFingerprintController) incomingMatchHandler(c *gin.Con
 	isAuthorized := false
 
 	for _, authorizedClientId := range authorizedClientIds {
-		if authorizedClientId == reqObj.ClientId {
+		if authorizedClientId == reqObj.DeviceId {
 			isAuthorized = true
 		}
 	}

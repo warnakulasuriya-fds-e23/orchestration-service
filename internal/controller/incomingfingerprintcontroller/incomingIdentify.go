@@ -23,7 +23,7 @@ func (controller *IncomingFingerprintController) incomingIdentifyHandler(c *gin.
 	isAuthorized := false
 
 	for _, authorizedClientId := range authorizedClientIds {
-		if authorizedClientId == reqObj.ClientId {
+		if authorizedClientId == reqObj.DeviceId {
 			isAuthorized = true
 		}
 	}

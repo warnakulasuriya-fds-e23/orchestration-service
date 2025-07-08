@@ -24,7 +24,7 @@ func (controller *IncomingFingerprintController) incomingEnrollHandler(c *gin.Co
 	isAuthorized := false
 
 	for _, authorizedClientId := range authorizedClientIds {
-		if authorizedClientId == reqObj.ClientId {
+		if authorizedClientId == reqObj.DeviceId {
 			isAuthorized = true
 		}
 	}
