@@ -3,6 +3,7 @@ package outgoingfingerprintcontroller
 import (
 	"crypto/tls"
 	"fmt"
+	"log"
 	"net/http"
 	"net/url"
 
@@ -28,6 +29,7 @@ func (controller *OutgoingFingerprintController) outgoingAuthorize(_reqObj reque
 	internalclient := &http.Client{Transport: tr}
 
 	Status = "Flow Initiation"
+	log.Println("intial call will be sent to : ", flowInitiationUrl)
 	intialResult, errflowItinit := authorizationcalls.FlowInitiationCall(flowInitiationUrl, _reqObj.DeviceId, internalclient)
 	if errflowItinit != nil {
 		err = fmt.Errorf("error encountered in authorization flow while at %s  : %w", Status, errflowItinit)
@@ -35,6 +37,7 @@ func (controller *OutgoingFingerprintController) outgoingAuthorize(_reqObj reque
 	}
 
 	Status = "Credential Submission"
+	log.Println("credential submission call will be sent to : ", credentialSubmissionUrl)
 	secondResult, errCredSubmit := authorizationcalls.CredentialSubmissionCall(credentialSubmissionUrl, internalclient, &intialResult, _reqObj)
 	if errCredSubmit != nil {
 		err = fmt.Errorf("error encountered in authorization flow while at %s  : %w", Status, errCredSubmit)
