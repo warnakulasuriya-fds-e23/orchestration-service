@@ -1,0 +1,19 @@
+{
+  "enrollmentDevices": [
+    "1234ABCD"
+  ],
+  "deviceDetails": {
+    "RNYRI378": {
+      "floor": "First Floor",
+      "door": "Main Entrance"
+    },
+    "ABCD123": {
+      "floor": "First Floor",
+      "door": "Secondary Entrance"
+    },
+    "XSA4242": {
+        "floor": "Second Floor",
+        "door" : "Main Entrance"
+    }
+  }
+}

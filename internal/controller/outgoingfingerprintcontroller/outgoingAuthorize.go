@@ -41,28 +41,30 @@ func (controller *OutgoingFingerprintController) outgoingAuthorize(_reqObj reque
 		return
 	}
 
-	deviceFloorAndDoor := map[string]map[string]string{
-		"XSA4242": {
-			"floor": "2",
-			"door":  "1",
-		},
-		"1234ABCD": {
-			"floor": "1",
-			"door":  "1",
-		},
-		"ABCD123": {
-			"floor": "1",
-			"door":  "2",
-		},
-	}
 	FlowStatus := secondResult.Get("flowStatus").String()
 	switch FlowStatus {
 	case "SUCCESS_COMPLETED":
-		Status = fmt.Sprintf("Access Granted for floor: %s door: %s", deviceFloorAndDoor[_reqObj.DeviceId]["floor"], deviceFloorAndDoor[_reqObj.DeviceId]["door"])
+		deviceDetails, ok := controller.devicesConfig.DeviceDetails[_reqObj.DeviceId]
+		if !ok {
+			Status = "device was identified as unregistered within orchestration server"
+			err = fmt.Errorf("device id is not registered")
+			return
+		}
+		door := deviceDetails.Door
+		floor := deviceDetails.Floor
+		Status = fmt.Sprintf("Access Granted for floor: %s door: %s", floor, door)
 		err = nil
 		return
 	case "INCOMPLETE":
-		Status = fmt.Sprintf("Access Denied for floor: %s door: %s", deviceFloorAndDoor[_reqObj.DeviceId]["floor"], deviceFloorAndDoor[_reqObj.DeviceId]["door"])
+		deviceDetails, ok := controller.devicesConfig.DeviceDetails[_reqObj.DeviceId]
+		if !ok {
+			Status = "device was identified as unregistered within orchestration server"
+			err = fmt.Errorf("device id is not registered")
+			return
+		}
+		door := deviceDetails.Door
+		floor := deviceDetails.Floor
+		Status = fmt.Sprintf("Access Denied for floor: %s door: %s", floor, door)
 		err = nil
 		return
 	case "":
@@ -72,7 +74,7 @@ func (controller *OutgoingFingerprintController) outgoingAuthorize(_reqObj reque
 	default:
 
 		Status = "Identifaction Failed : " + FlowStatus
-		errorMessage := secondResult.Get("message").String()
+		errorMessage := "device is not properly cofigured in idp" + secondResult.Get("message").String()
 		err = fmt.Errorf("%s", errorMessage)
 		return
 	}

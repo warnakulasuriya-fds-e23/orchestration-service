@@ -2,15 +2,20 @@ package incomingfingerprintcontroller
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/warnakulasuriya-fds-e23/orchestration-service/internal/config"
 	"github.com/warnakulasuriya-fds-e23/orchestration-service/internal/controller/outgoingfingerprintcontroller"
 )
 
 type IncomingFingerprintController struct {
 	outgoingfingerprintcontroller *outgoingfingerprintcontroller.OutgoingFingerprintController
+	devicesConfig                 config.DevicesConfigJSON
 }
 
-func NewIncomingFingerprintController(outcntrl *outgoingfingerprintcontroller.OutgoingFingerprintController) *IncomingFingerprintController {
-	return &IncomingFingerprintController{outgoingfingerprintcontroller: outcntrl}
+func NewIncomingFingerprintController(devicesConfig config.DevicesConfigJSON, outcntrl *outgoingfingerprintcontroller.OutgoingFingerprintController) *IncomingFingerprintController {
+	return &IncomingFingerprintController{
+		outgoingfingerprintcontroller: outcntrl,
+		devicesConfig:                 devicesConfig,
+	}
 }
 
 func (controller *IncomingFingerprintController) IncomingIdentifyHandler(c *gin.Context) {

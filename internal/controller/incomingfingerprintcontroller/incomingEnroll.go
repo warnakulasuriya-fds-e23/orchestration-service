@@ -2,8 +2,6 @@ package incomingfingerprintcontroller
 
 import (
 	"net/http"
-	"os"
-	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/warnakulasuriya-fds-e23/orchestration-service/internal/requestobjects"
@@ -11,9 +9,6 @@ import (
 )
 
 func (controller *IncomingFingerprintController) incomingEnrollHandler(c *gin.Context) {
-	// check whether the client-id is authorized to be performing the enroll procedure
-	authorizedClientIdsString := os.Getenv("FINGERPRINT_AUTHORIZED_ENROLLMENT_CLIENT_IDS")
-	authorizedClientIds := strings.Split(authorizedClientIdsString, ",")
 	var reqObj requestobjects.SubmitForEnrollReqObj
 	err := c.BindJSON(&reqObj)
 	if err != nil {
@@ -23,13 +18,14 @@ func (controller *IncomingFingerprintController) incomingEnrollHandler(c *gin.Co
 	}
 	isAuthorized := false
 
-	for _, authorizedClientId := range authorizedClientIds {
-		if authorizedClientId == reqObj.DeviceId {
+	// checking through configured devices
+	for _, deviceid := range controller.devicesConfig.EnrollmentDevices {
+		if deviceid == reqObj.DeviceId {
 			isAuthorized = true
 		}
 	}
 	if !isAuthorized {
-		resObj := responseobjects.ErrorResObj{Message: "Permission Denied client that submit for enrollment is not authorized to use this feature "}
+		resObj := responseobjects.ErrorResObj{Message: "Permission Denied Device that submit for Access is unregistered in orchestration server "}
 		c.IndentedJSON(http.StatusUnauthorized, resObj)
 		return
 	}

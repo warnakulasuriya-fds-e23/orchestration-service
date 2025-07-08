@@ -8,6 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	"github.com/warnakulasuriya-fds-e23/orchestration-service/internal/config"
 	"github.com/warnakulasuriya-fds-e23/orchestration-service/internal/controller/incomingfingerprintcontroller"
 	"github.com/warnakulasuriya-fds-e23/orchestration-service/internal/controller/outgoingfingerprintcontroller"
 	"github.com/warnakulasuriya-fds-e23/orchestration-service/internal/customstorage"
@@ -36,12 +37,22 @@ func main() {
 			log.Println(".env successfully loaded")
 		}
 	}
+	devicesConfigFilePath := os.Getenv("DEVICES_CONFIG_JSON_PATH")
+	if devicesConfigFilePath == "" {
+		log.Fatalf("devices config json path not specified in environment variable CONFIG_JSON_PATH")
+	}
+
+	devicesConfig, errDevConfigLoader := config.DeviceConfigLoader(devicesConfigFilePath)
+	if errDevConfigLoader != nil {
+		log.Fatalf("error while trying to load up devices config json : %s", err.Error())
+	}
+
 	tokenstorage, err := customstorage.NewTokenStorage()
 	if err != nil {
 		log.Fatalf("unable to make token storage : %s", err.Error())
 	}
-	outgoingfingerprintcntrlr := outgoingfingerprintcontroller.NewOutgoingFingerprintController(*tokenstorage)
-	incomingfingerprintcntrlr := incomingfingerprintcontroller.NewIncomingFingerprintController(outgoingfingerprintcntrlr)
+	outgoingfingerprintcntrlr := outgoingfingerprintcontroller.NewOutgoingFingerprintController(devicesConfig, *tokenstorage)
+	incomingfingerprintcntrlr := incomingfingerprintcontroller.NewIncomingFingerprintController(devicesConfig, outgoingfingerprintcntrlr)
 
 	router := gin.Default()
 	router.Use(RequestLoggerMiddleware())

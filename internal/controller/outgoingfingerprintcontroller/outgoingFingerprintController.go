@@ -3,6 +3,7 @@ package outgoingfingerprintcontroller
 import (
 	"os"
 
+	"github.com/warnakulasuriya-fds-e23/orchestration-service/internal/config"
 	"github.com/warnakulasuriya-fds-e23/orchestration-service/internal/customstorage"
 	"github.com/warnakulasuriya-fds-e23/orchestration-service/internal/requestobjects"
 	"github.com/warnakulasuriya-fds-e23/orchestration-service/internal/responseobjects"
@@ -19,14 +20,16 @@ const (
 )
 
 type OutgoingFingerprintController struct {
-	tokenStorage customstorage.TokenStorage
-	targetAdress string
+	tokenStorage  customstorage.TokenStorage
+	targetAdress  string
+	devicesConfig config.DevicesConfigJSON
 }
 
-func NewOutgoingFingerprintController(tstorage customstorage.TokenStorage) (controller *OutgoingFingerprintController) {
+func NewOutgoingFingerprintController(devicesConfig config.DevicesConfigJSON, tstorage customstorage.TokenStorage) (controller *OutgoingFingerprintController) {
 	return &OutgoingFingerprintController{
-		tokenStorage: tstorage,
-		targetAdress: os.Getenv("ADRESS_FOR_OUTGOING"),
+		tokenStorage:  tstorage,
+		targetAdress:  os.Getenv("ADRESS_FOR_OUTGOING"),
+		devicesConfig: devicesConfig,
 	}
 }
 
