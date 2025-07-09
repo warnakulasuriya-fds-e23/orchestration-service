@@ -13,7 +13,7 @@ import (
 	"github.com/warnakulasuriya-fds-e23/orchestration-service/internal/requestobjects"
 )
 
-func CredentialSubmissionCall(accessToken string, urlString string, internalClient *http.Client, initialResult *gjson.Result, _reqObj requestobjects.SubmitForIdentifyReqObj) (secondResult gjson.Result, err error) {
+func CredentialSubmissionCall(urlString string, internalClient *http.Client, initialResult *gjson.Result, _reqObj requestobjects.SubmitForIdentifyReqObj) (secondResult gjson.Result, err error) {
 	authenticators := initialResult.Get("nextStep.authenticators").Array()
 	var authenticatorId string
 	for _, authenticator := range authenticators {
@@ -55,7 +55,6 @@ func CredentialSubmissionCall(accessToken string, urlString string, internalClie
 	}
 
 	secondReq.Header.Add("Content-Type", "application/json")
-	secondReq.Header.Add("Authorization", "Bearer "+accessToken)
 
 	secondRes, errReqSend := internalClient.Do(secondReq)
 	if errReqSend != nil {
