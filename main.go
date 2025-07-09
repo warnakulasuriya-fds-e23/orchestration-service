@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"io"
 	"log"
+	"net/http"
 	"os"
 
 	"github.com/gin-gonic/gin"
@@ -24,6 +25,11 @@ func RequestLoggerMiddleware() gin.HandlerFunc {
 		log.Println(c.Request.Header)
 		c.Next()
 	}
+}
+
+func testHandler(c *gin.Context) {
+	log.Println("recieved!")
+	c.IndentedJSON(http.StatusOK, "recievd")
 }
 
 func main() {
@@ -61,5 +67,6 @@ func main() {
 	router.POST("/api/fingerprint/enroll", incomingfingerprintcntrlr.IncomingEnrollHandler)
 	router.POST("/api/fingerprint/authorize", incomingfingerprintcntrlr.IncomingAuthorize)
 
+	router.POST("/oauth2/authorize", testHandler)
 	router.Run(":5000")
 }

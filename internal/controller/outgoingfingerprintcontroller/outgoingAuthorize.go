@@ -12,6 +12,7 @@ import (
 )
 
 func (controller *OutgoingFingerprintController) outgoingAuthorize(_reqObj requestobjects.SubmitForIdentifyReqObj) (Status string, err error) {
+	accessToken, err := controller.tokenStorage.GetAccessToken()
 	Status = "processing Urls"
 	//TODO : Handle Url concatanation at outgoingFingerprintController Startup
 	flowInitiationUrl, errflInitUrl := url.JoinPath(controller.targetAdress, AuthorizeEndpoint)
@@ -30,7 +31,7 @@ func (controller *OutgoingFingerprintController) outgoingAuthorize(_reqObj reque
 
 	Status = "Flow Initiation"
 	log.Println("intial call will be sent to : ", flowInitiationUrl)
-	intialResult, errflowItinit := authorizationcalls.FlowInitiationCall(flowInitiationUrl, _reqObj.DeviceId, internalclient)
+	intialResult, errflowItinit := authorizationcalls.FlowInitiationCall(accessToken, flowInitiationUrl, _reqObj.DeviceId, internalclient)
 	if errflowItinit != nil {
 		err = fmt.Errorf("error encountered in authorization flow while at %s  : %w", Status, errflowItinit)
 		return
@@ -38,7 +39,7 @@ func (controller *OutgoingFingerprintController) outgoingAuthorize(_reqObj reque
 
 	Status = "Credential Submission"
 	log.Println("credential submission call will be sent to : ", credentialSubmissionUrl)
-	secondResult, errCredSubmit := authorizationcalls.CredentialSubmissionCall(credentialSubmissionUrl, internalclient, &intialResult, _reqObj)
+	secondResult, errCredSubmit := authorizationcalls.CredentialSubmissionCall(accessToken, credentialSubmissionUrl, internalclient, &intialResult, _reqObj)
 	if errCredSubmit != nil {
 		err = fmt.Errorf("error encountered in authorization flow while at %s  : %w", Status, errCredSubmit)
 		return

@@ -12,7 +12,7 @@ import (
 	"github.com/tidwall/gjson"
 )
 
-func IdTokenRetrivalCall(urlString string, internalClient *http.Client, secondResult gjson.Result) (idToken string, err error) {
+func IdTokenRetrivalCall(accessToken string, urlString string, internalClient *http.Client, secondResult gjson.Result) (idToken string, err error) {
 	code := secondResult.Get("authData.code").String()
 	trData := url.Values{}
 	trData.Set("grant_type", "authorization_code")
@@ -34,7 +34,7 @@ func IdTokenRetrivalCall(urlString string, internalClient *http.Client, secondRe
 	authHeadervalue := base64.StdEncoding.EncodeToString([]byte(consumerKey + ":" + consumerSecret))
 	tokenReq.Header.Add("Authorization", "Basic "+authHeadervalue)
 	tokenReq.Header.Add("Content-Type", "application/x-www-form-urlencoded")
-
+	tokenReq.Header.Add("Authorization", "Bearer "+accessToken)
 	tokenRes, errReqSend := internalClient.Do(tokenReq)
 	if errReqSend != nil {
 		err = fmt.Errorf("error while sending or recieving post request : %w", errReqSend)
