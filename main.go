@@ -39,7 +39,7 @@ func main() {
 	}
 	devicesConfigFilePath := os.Getenv("DEVICES_CONFIG_JSON_PATH")
 	if devicesConfigFilePath == "" {
-		log.Fatalf("devices config json path not specified in environment variable CONFIG_JSON_PATH")
+		log.Fatalf("devices config json path not specified in environment variable DEVICES_CONFIG_JSON_PATH")
 	}
 
 	devicesConfig, errDevConfigLoader := config.DeviceConfigLoader(devicesConfigFilePath)
