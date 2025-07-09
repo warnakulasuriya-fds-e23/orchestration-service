@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"net/url"
 	"os"
@@ -83,6 +84,7 @@ func (tokenStorage *TokenStorage) GetAccessToken() (token string, err error) {
 
 		tokenStorage.expiryTime = time.Now().Add(time.Duration(resObj.ExpiresIn) * time.Second)
 		tokenStorage.accessToken = resObj.AccessToken
+		log.Println("obtained new access token from : ", tokenEndpoint)
 
 	}
 	token = tokenStorage.accessToken
